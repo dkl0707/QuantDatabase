@@ -1,0 +1,14 @@
+TABLE_SCHEMA,TABLE_NAME,TABLE_COMMENT
+fut_data,futbasic,期货合约信息表
+fut_data,futdailyprices,期货每日交易价格数据
+fut_data,futholdingcffex,期货每日持仓(中国金融期货交易所)
+fut_data,futholdingczce,期货每日持仓(郑州商品交易所)
+fut_data,futholdingdce,期货每日持仓(大连商品期货交易所)
+fut_data,futholdingshfe,期货每日持仓(上海期货交易所)
+fut_data,futwsr,期货仓单日报
+stk_data,asharedailybasic,A股每日指标
+stk_data,asharedailyprices,A股每日交易价格数据
+stk_data,asharemonthlyprices,A股每月交易价格数据
+stk_data,asharestockbasic,A股基本情况表
+stk_data,asharesw2021daily,申万行业指数(2021年版)日频数据
+stk_data,asharetradecal,A股交易日历
