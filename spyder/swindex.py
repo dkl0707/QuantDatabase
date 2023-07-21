@@ -19,7 +19,7 @@ def sw_hist_daily(index_code, timeout=60, max_retries=10, sleeptime=30):
     ----------
     下载申万指数历史日频数据
     申万宏源研究-指数发布-指数详情-指数历史数据
-    地址: https://www.swhyresearch.com/institute-sw/api/index_publish/trend/
+    地址: https://www.swsresearch.com/
 
     Parameters
     ----------
@@ -32,14 +32,13 @@ def sw_hist_daily(index_code, timeout=60, max_retries=10, sleeptime=30):
     ----------
     pandas.DataFrame. 申万指数历史日频数据
     '''
-    url = 'https://www.swhyresearch.com/institute-sw/api/index_publish/trend/'
-    params = {
-        'swindexcode': index_code[0:-3],
-        'period': 'DAY',
-    }
+    url = f'''https://www.swsresearch.com/institute-sw/api/index_publish/trend/?
+              swindexcode={index_code[0:-3]}&period=DAY'''
+    url = url.replace('\n', '').replace(' ', '')
     for retries in range(1, max_retries + 1):
         try:
-            r = requests.get(url, params=params, timeout=timeout)
+            headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'}
+            r = requests.get(url, headers=headers, timeout=timeout)
             data_json = r.json()
         except Exception as e:
             if retries == max_retries:

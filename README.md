@@ -1,6 +1,16 @@
+<!--
+ * @Author: dkl
+ * @Description: README.md
+ * @Date: 2023-07-02 15:27:00
+-->
 # QuantDatabase
 金融量化数据库搭建，介绍见https://mp.weixin.qq.com/s/q9hravMG_v_EHm9APl-x7w
 
+## 更新
+2023-07-21: 申万指数网址变更，在swindex.py中进行爬虫代码修改
+2023-07-17: 补上了table_structure和log文件夹
+
+## 说明
 本项目为根据tushare数据库进行搭建，**所有配置信息如数据库信息，tushare token等均在config文件夹中的config.ini下。请换成自己的信息。**
 项目代码仅作为初步示例使用，如还需加入更多的如期货、基金等，可以在download文件夹下编写新的如asharedaily.py的下载函数文件。
 当然，如果你不是用tushare的接口，也可以在本代码框架下做相应的修改，例如，下载A股每日交易数据时，可将download中的asharedaily.py中downloader.download(pro.daily, trade_date=trade_date，fields=fields)的换成自己的数据接口。
