@@ -6,7 +6,7 @@ Date: 2023-03-19 11:08:37
 import unittest
 import pandas as pd
 from download.asharedaily import AshareDailyDownload
-from download.trade_cal import TradecalDownload
+from download.tradecal import TradecalDownload
 from typing import List
 test_date = '20230315'
 

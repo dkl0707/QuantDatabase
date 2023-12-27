@@ -4,14 +4,14 @@ Description: 测试读取表和创建表
 Date: 2023-03-19 11:08:37
 '''
 import unittest
-from download.table_structure import TableStructure
+from database.table_structure import TableStructure
 
 
 class TestTableStructure(unittest.TestCase):
 
-    def test_download_all_structure(self):
+    def test_pull_all_structure(self):
         ts = TableStructure()
-        tb_struct_df, tb_ind_df, tb_comm_df = ts.download_all_structure()
+        tb_struct_df, tb_ind_df, tb_comm_df = ts.pull_all_structure()
         # 打印三个df
         print('struct_df:\n', tb_struct_df)
         print('ind_df:\n', tb_ind_df)

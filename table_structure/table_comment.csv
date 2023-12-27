@@ -6,8 +6,11 @@ fut_data,futholdingczce,期货每日持仓(郑州商品交易所)
 fut_data,futholdingdce,期货每日持仓(大连商品期货交易所)
 fut_data,futholdingshfe,期货每日持仓(上海期货交易所)
 fut_data,futwsr,期货仓单日报
+stk_data,asharebalancesheet,A股资产负债表
+stk_data,asharecashflow,A股现金流量表
 stk_data,asharedailybasic,A股每日指标
 stk_data,asharedailyprices,A股每日交易价格数据
+stk_data,ashareincome,A股利润表数据
 stk_data,asharemonthlyprices,A股每月交易价格数据
 stk_data,asharestockbasic,A股基本情况表
 stk_data,asharesw2021daily,申万行业指数(2021年版)日频数据

@@ -7,6 +7,8 @@
 金融量化数据库搭建，介绍见https://mp.weixin.qq.com/s/q9hravMG_v_EHm9APl-x7w
 
 ## 更新
+2023-12-26：对部分内容进行了重写。增加财务数据，期货数据等。
+
 2023-07-21: 申万指数网址变更，在swindex.py中进行爬虫代码修改
 
 2023-07-17: 补上了table_structure和log文件夹
@@ -31,6 +33,7 @@
 * log: **日志文件存储**。当每天运行main.py时，该文件夹都会有相应的log文件。如"20230415.py"。
 * table_structure: **数据库结构**。table_comment.xlsx是表的注释，table_index.xlsx是表的索引信息，table_structure.xlsx是表的字段信息。
 * test: **测试函数**，使用unittest框架。包含cases文件夹，test_main.py和test_all_result.html。其中cases下是各个测试类，test_main.py是测试的主函数，里面包含了单个测试和全部测试的情况。main.py中，可以注释掉main()，取消注释test_main()进行测试。test_all_result.html是全部测试的结果，可以直接点击进行查看。
-* utils: **工具性函数**。包含配置文件读取(conf.py), tushare数据下载器(downloader.py), 日志函数(logger.py), 邮件发送函数(sendemail.py)
+* utils: **工具性函数**。包含basicspyder.py(基础爬虫文件), conf.py(配置文件读取), downloader.py(tushare数据下载器), logger.py(日志函数), sendemail.py(邮件发送函数),utils.py(其他工具性函数)
+* tmp: 缓存用的文件夹。例如爬虫下载数据时，可以将数据缓存到该文件夹下，待数据全部下载完毕后，可以将文件夹下的数据上传到数据库.
+* main_func: **主函数文件夹**。包括initialize.py(以本地表结构文件去数据库中创建表和数据库), pull_table_structure.py(将数据库中的表结构拉取到本地), run_daily.py(每天运行的函数文件)
 * main.py：**主函数文件**
-

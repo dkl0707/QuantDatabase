@@ -6,7 +6,7 @@ Date: 2023-03-19 11:08:37
 import unittest
 import pandas as pd
 from database.database import DataBase
-from download.table_structure import TableStructure
+from database.table_structure import TableStructure
 
 
 class TestDataBase(unittest.TestCase):
@@ -27,7 +27,7 @@ class TestDataBase(unittest.TestCase):
         conn.execute(sql)
         conn.close()
         ts = TableStructure()
-        ts.download_all_structure()
+        ts.pull_all_structure()
 
     def tearDown(self):
         # 执行后，删除table,重新下载table_structure
@@ -37,14 +37,7 @@ class TestDataBase(unittest.TestCase):
         conn.execute(sql)
         conn.close()
         ts = TableStructure()
-        ts.download_all_structure()
-
-    def test_read_create_table_struct(self):
-        db = DataBase('stk_data')
-        create_table_struct = db._read_create_table_struct('ccass_hold_detail_2077')
-        for key, value in create_table_struct.items():
-            print(key, ':')
-            print(value)
+        ts.pull_all_structure()
 
     def test_get_create_table_sql(self):
         db = DataBase('stk_data')

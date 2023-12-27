@@ -1,14 +1,22 @@
 '''
 Author: dkl
-Description: 测试
 Date: 2023-03-19 10:50:36
+Description: 测试主函数
 '''
 import unittest
 from BeautifulReport import BeautifulReport
 from utils.logger import SendEmail
 
 
-def test_all_cases(report_html=False):
+def test_all_cases(report_html=True):
+    """
+    对所有样例进行测试
+
+    Parameters
+    ----------
+    report_html : Bool, optional
+        是否以html形式展现, 默认为True
+    """
     # 加载目录下所有用例模块
     case_path = "./test/cases"
     # start_dir是用例模块的路径，pattern是模块名
@@ -36,11 +44,12 @@ def test_all_cases(report_html=False):
 
 
 def test_simple_case():
+    """
+    少数测试用例测试
+    """
     # 实例化测试套件
     suite01 = unittest.TestSuite()
     # 将测试用例加入测试套件. 按照加入的顺序运行
-    # from test.cases.case_download_stock import TestTradeCal
-    # suite01.addTest(TestTradeCal("test_download_trade_cal"))
     from test.cases.case_logger import TestLogger
     suite01.addTest(TestLogger("test_send_error_email"))
     # 实例化一个运行器
