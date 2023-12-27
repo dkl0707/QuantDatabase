@@ -23,7 +23,9 @@ class TableStructure(DataBase):
         self.table_index_path = conf.get_config("table_index_path")
         self.table_comment_path = conf.get_config("table_comment_path")
         # 数据库字符串
-        db_lst = ["stk_data", "fund_data", "bond_data", "fut_data", "opt_data"]
+        conf_db_str = conf.get_config("database_lst")
+        conf_db_str = conf_db_str.replace(" ", "")
+        db_lst = conf_db_str.split(',')
         db_lst = ['"' + i + '"' for i in db_lst]
         self.db_string = ",".join(db_lst)
 
