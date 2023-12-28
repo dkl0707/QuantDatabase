@@ -1,10 +1,10 @@
 <!--
  * @Author: dkl
  * @Description: README.md
- * @Date: 2023-07-02 15:27:00
+ * @Date: 2023-12-28 11:37:00
 -->
 # QuantDatabase
-金融量化数据库搭建，介绍见https://mp.weixin.qq.com/s/q9hravMG_v_EHm9APl-x7w
+金融量化数据库搭建，详细介绍见https://mp.weixin.qq.com/s/C3Wihz-lbD21e12tyHhKLg
 
 ## 更新
 2023-12-26：对部分内容进行了重写。增加财务数据，期货数据等。
