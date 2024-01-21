@@ -3,6 +3,8 @@ Author: dkl
 Date: 2023-12-19 17:27:23
 Description: 主函数
 '''
+import os
+os.chdir(os.path.dirname(__file__))
 # from main_func.initialize import initialize_main
 # from main_func.pull_table_structure import pull_table_structure_main
 from main_func.run_daily import run_daily_main
