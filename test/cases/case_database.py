@@ -39,6 +39,13 @@ class TestDataBase(unittest.TestCase):
         ts = TableStructure()
         ts.pull_all_structure()
 
+    def test_read_create_table_struct(self):
+        db = DataBase('stk_data')
+        create_table_struct = db._read_create_table_struct('ccass_hold_detail_2077')
+        for key, value in create_table_struct.items():
+            print(key, ':')
+            print(value)
+
     def test_get_create_table_sql(self):
         db = DataBase('stk_data')
         sql = db._check_table_exists('ccass_hold_detail_2077')

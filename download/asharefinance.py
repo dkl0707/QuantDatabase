@@ -122,9 +122,6 @@ class AshareFinanceDownload(DataBase):
 
     @logger_decorator(logger)
     def download_main(self):
-        """
-        按报告期下载的主函数
-        """
         self.download_income()
         self.download_balancesheet()
         self.download_cashflow()
@@ -132,9 +129,10 @@ class AshareFinanceDownload(DataBase):
     @logger_decorator(logger)
     def download_income(self):
         """
-        利润表按报告期下载下载
+        利润表数据下载
         """
         self._set_period_lst("ashareincome")
+        # 变量列表
         var_name_lst = [
             "stock_code",
             "ann_date",
@@ -289,7 +287,7 @@ class AshareFinanceDownload(DataBase):
     @logger_decorator(logger)
     def download_balancesheet(self):
         """
-        资产负债表按报告期下载
+        资产负债表数据下载
         """
         self._set_period_lst("asharebalancesheet")
         # 变量列表
@@ -509,10 +507,9 @@ class AshareFinanceDownload(DataBase):
 
     @logger_decorator(logger)
     def download_cashflow(self):
-        """
-        现金流量表按报告期下载
-        """
         self._set_period_lst("asharecashflow")
+        # 现金流量表数据下载
+        # 变量列表
         var_name_lst = [
             "stock_code",
             "ann_date",
@@ -670,18 +667,12 @@ class AshareFinanceDownload(DataBase):
     # 以下部分为按照stock_code方式下载
     # #############################################################
     def _set_code_lst(self):
-        """
-        获取应当循环的股票代码
-        """
         sql = "select stock_code from asharestockbasic;"
         code_lst = pd.read_sql(sql=sql, con=self.engine)["stock_code"].tolist()
         self.code_lst = code_lst
 
     @logger_decorator(logger)
     def download_main_code(self):
-        """
-        按股票代码下载的主函数
-        """
         self.download_income_code()
         self.download_balancesheet_code()
         self.download_cashflow_code()
@@ -689,7 +680,7 @@ class AshareFinanceDownload(DataBase):
     @logger_decorator(logger)
     def download_income_code(self):
         """
-        利润表按股票代码下载
+        利润表数据下载
         """
         self._set_code_lst()
         # 变量列表
@@ -831,7 +822,7 @@ class AshareFinanceDownload(DataBase):
     @logger_decorator(logger)
     def download_balancesheet_code(self):
         """
-        资产负债表按股票代码下载
+        资产负债表数据下载
         """
         self._set_code_lst()
         # 变量列表
@@ -1035,10 +1026,9 @@ class AshareFinanceDownload(DataBase):
 
     @logger_decorator(logger)
     def download_cashflow_code(self):
-        """
-        现金流量表按股票代码下载
-        """
         self._set_code_lst()
+        # 现金流量表数据下载
+        # 变量列表
         var_name_lst = [
             "stock_code",
             "ann_date",

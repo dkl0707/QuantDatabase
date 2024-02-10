@@ -11,6 +11,7 @@ from download import (
     asharemonthly,
     asharefinance,
     asharesw2021daily,
+    ashareindex,
     futdaily
 )
 from utils.logger import Logger
@@ -53,6 +54,9 @@ def download_main():
     # A股月频
     asharemonthly_dl = asharemonthly.AshareMonthlyDownload()
     asharemonthly_dl.download_main()
+    # 指数
+    ashareindex_dl = ashareindex.AshareIndexDownload()
+    ashareindex_dl.download_main()
     # 申万2021行业指数
     asharesw2021daily_dl = asharesw2021daily.AshareSW2021DailyDownload()
     asharesw2021daily_dl.download_main()

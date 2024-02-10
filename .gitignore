@@ -4,4 +4,5 @@ table_structure/table_comment_*.csv
 table_structure/table_index_*.csv
 table_structure/table_structure_*.csv
 */__pycache__
+*.pyc
 *.ipynb

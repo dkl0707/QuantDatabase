@@ -69,7 +69,7 @@ class AshareDailyDownload(DataBase):
 
         Returns
         -------
-        List[str]. 月度交易日列表
+        List[str]. 日频交易日列表
         """
         # 获取从历史至昨天的交易日列表
         last_date = datetime.datetime.now() - datetime.timedelta(days=1)
@@ -82,20 +82,16 @@ class AshareDailyDownload(DataBase):
 
     @logger_decorator(logger)
     def download_main(self):
-        """
-        下载的主函数
-        """
         self.download_stockbasic()
         self.download_dailyprices()
         self.download_dailybasic()
 
     @logger_decorator(logger)
     def download_dailyprices(self):
-        """
-        股票日频价格数据下载
-        """
         self._set_trade_date_lst("asharedailyprices")
+        # 日频数据下载
         for trade_date in tqdm(self.trade_date_lst):
+            # 日频数据
             fields_lst = [
                 "trade_date",
                 "ts_code",
@@ -139,10 +135,8 @@ class AshareDailyDownload(DataBase):
 
     @logger_decorator(logger)
     def download_dailybasic(self):
-        """
-        股票日频指标下载
-        """
         self._set_trade_date_lst("asharedailybasic")
+        # 日度数据下载
         for trade_date in tqdm(self.trade_date_lst):
             # 日频数据
             fields_lst = [
@@ -201,9 +195,7 @@ class AshareDailyDownload(DataBase):
 
     @logger_decorator(logger)
     def download_stockbasic(self):
-        """
-        股票基本信息下载
-        """
+        # 拉取数据
         fields = [
             "ts_code",
             "name",

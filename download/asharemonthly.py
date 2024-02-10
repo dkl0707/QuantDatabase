@@ -62,15 +62,15 @@ class AshareMonthlyDownload(DataBase):
 
     def _get_monthly_trade_date_lst(self):
         """
-        获取从历史到昨天的月度交易日列表
+        获取从历史到昨天的月频交易日列表
 
         Parameters
         ----------
         None.
 
-        Returns
-        -------
-        List[str]. 月度交易日列表
+        Return
+        ----------
+        List[str]. 月频交易日列表
         """
         # 获取从历史至上个月最后一天的交易日列表
         # 获取上个月最后一天
@@ -98,16 +98,10 @@ class AshareMonthlyDownload(DataBase):
 
     @logger_decorator(logger)
     def download_main(self):
-        """
-        下载的主函数
-        """
         self.download_monthlyprices()
 
     @logger_decorator(logger)
     def download_monthlyprices(self):
-        """
-        下载月度价格数据
-        """
         self._set_trade_date_lst("asharemonthlyprices")
         # 月频数据下载
         for trade_date in tqdm(self.trade_date_lst):

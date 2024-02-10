@@ -67,19 +67,6 @@ class DataBase(object):
         return True
 
     def _check_database_exists(self, database_name):
-        """
-        检查数据库是否存在
-
-        Parameters
-        ----------
-        database_name : str
-            数据库名称
-
-        Returns
-        -------
-        Bool
-            数据库名称是否在mysql中
-        """
         conn = self.engine.connect()
         lst = conn.execute("show databases;").fetchall()
         lst = [element[0] for element in lst]
@@ -88,19 +75,6 @@ class DataBase(object):
 
     @logger_decorator(logger)
     def create_table(self, table_name):
-        """
-        创建表
-
-        Parameters
-        ----------
-        table_name : str
-            表名称
-
-        Returns
-        -------
-        Bool
-            是否创建成功
-        """
         if self._check_table_exists(table_name):
             logger.info(f"数据库{self.database}中表格{table_name}已经存在!")
             return False
@@ -126,9 +100,6 @@ class DataBase(object):
         return True
 
     def _read_local_table_struct_df(self):
-        """
-        读取本地表格文件，添加到self中
-        """
         if not self._check_table_struct_df():
             return
         # table_structure配置信息读取
@@ -142,14 +113,6 @@ class DataBase(object):
         self.table_comment_df = pd.read_csv(table_comment_path)
 
     def _check_table_struct_df(self):
-        """
-        检查是否已经读取了本地存放数据库表结构的表格
-
-        Returns
-        -------
-        Bool.
-            是否已经读取了本地存放数据库表结构的表格
-        """
         flag1 = self.table_struct_df is None
         flag2 = self.table_ind_df is None
         flag3 = self.table_comment_df is None
@@ -157,19 +120,6 @@ class DataBase(object):
         return flag
 
     def _check_table_exists(self, table_name):
-        """
-        检查表格是否存在
-
-        Parameters
-        ----------
-        table_name : str
-            表格名称
-
-        Returns
-        -------
-        Bool.
-            表格是否存在
-        """
         conn = self.engine.connect()
         lst = conn.execute("show tables;").fetchall()
         lst = [element[0] for element in lst]
@@ -177,19 +127,6 @@ class DataBase(object):
         return table_name in lst
 
     def _read_create_table_struct(self, table_name):
-        """
-        创建表时读取本地表结构文件，得到表内部结构，索引，注释
-
-        Parameters
-        ----------
-        table_name : str
-            表格名称
-
-        Returns
-        -------
-        Dict.
-            表内部结构，索引，注释
-        """
         # 表格结构
         tb_df = self.table_struct_df.copy()
         tb_df = tb_df.loc[
@@ -219,31 +156,11 @@ class DataBase(object):
             :,
         ]
         tb_comm = tb_comm["TABLE_COMMENT"].values[0]
-        # 用%%来代替%
         tb_comm = "%%".join(tb_comm.split("%"))
         result = {"tb_df": tb_df, "ind_df": ind_df, "tb_comm": tb_comm}
         return result
 
     def _get_create_table_sql(self, table_name, tb_df, ind_df, tb_comm):
-        """
-        获取创建表的sql语句
-
-        Parameters
-        ----------
-        table_name : str.
-            表格名称
-        tb_df : pandas.DataFrame.
-            表内部结构
-        ind_df : pandas.DataFrame.
-            表格索引
-        tb_comm : str
-            表格注释
-
-        Returns
-        -------
-        str.
-            创建表格的sql语句
-        """
         tb_sql = f"CREATE TABLE {table_name} (\n"
         for i in range(len(tb_df.index)):
             # 字段名
@@ -369,17 +286,5 @@ class DataBase(object):
 
     @logger_decorator(logger)
     def rename_table(self, table_name, new_table_name, retries=5):
-        """
-        重命名表格
-
-        Parameters
-        ----------
-        table_name : str
-            旧的表格名字
-        new_table_name : str
-            新的表格名字
-        retries : int, optional
-            重试次数，by default 5
-        """
         sql = f'RENAME TABLE {table_name} TO {new_table_name};'
         self.execute_sql(sql, retries)

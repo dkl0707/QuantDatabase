@@ -29,22 +29,34 @@ class FutDailyDownload(DataBase):
 
     def __init__(self, trade_date_lst=None):
         """
+        Description
+        ----------
         类初始化.
 
         Parameters
         ----------
         trade_date_lst: List[str]. 默认为None, 即交易日历中有，但表中没有的数据
+
+        Return
+        ----------
+        None
         """
         super().__init__(database="fut_data")
         self.trade_date_lst = trade_date_lst
 
     def _set_trade_date_lst(self, table, start_date="19950417"):
         """
+        Description
+        ----------
         获取应该循环的交易日列表，其中self.trade_date_lst必须为None
 
         Parameters
         ----------
         table: 数据库表名
+
+        Return
+        ----------
+        None
         """
         # 默认下载数据库交易日历表至今缺失的数据
         if self.trade_date_lst is not None:
@@ -60,15 +72,17 @@ class FutDailyDownload(DataBase):
 
     def _get_daily_trade_date_lst(self, start_date="19950417"):
         """
+        Description
+        ----------
         获取从历史到昨天的月度交易日列表
 
         Parameters
         ----------
         None.
 
-        Returns
-        -------
-        List[str]. 月度交易日列表
+        Return
+        ----------
+        List[str]. 日频交易日列表
         """
         # 获取从历史至昨天的交易日列表
         end_time = datetime.datetime.now() - datetime.timedelta(days=1)
@@ -82,17 +96,17 @@ class FutDailyDownload(DataBase):
 
     def _select_trading_contract(self, df):
         """
+        Description
+        ----------
         筛选实际进行交易的合约，如'A0001',而不是'AL','A'等主力或者连续合约
 
         Parameters
         ----------
-        df: pandas.DataFrame.
-            数据列表，必须含有fut_code
+        df: 数据列表，必须含有fut_code
 
-        Returns
-        -------
-        pandas.DataFrame.
-            筛选后的数据
+        Return
+        ----------
+        pandas.DataFrame. 筛选后的数据
         """
 
         def _select_code_func(code):
@@ -108,9 +122,6 @@ class FutDailyDownload(DataBase):
 
     @logger_decorator(logger)
     def download_main(self):
-        """
-        下载的主函数
-        """
         self.download_futbasic()
         self.download_dailyprices()
         self.download_futwsr()
@@ -118,11 +129,9 @@ class FutDailyDownload(DataBase):
 
     @logger_decorator(logger)
     def download_dailyprices(self):
-        """
-        期货日频数据下载
-        """
         self._set_trade_date_lst("futdailyprices", "19950417")
         for trade_date in tqdm(self.trade_date_lst):
+            # 日频数据
             fields_lst = [
                 "trade_date",
                 "ts_code",
@@ -175,9 +184,7 @@ class FutDailyDownload(DataBase):
 
     @logger_decorator(logger)
     def download_futbasic(self):
-        """
-        期货基本信息下载
-        """
+        # 拉取数据
         fields = [
             "ts_code",
             "exchange",
@@ -232,13 +239,12 @@ class FutDailyDownload(DataBase):
             flag_replace=True,
             dtype=sql_dtype,
         )
+        return
 
     @logger_decorator(logger)
     def download_futwsr(self):
-        """
-        期货仓单下载
-        """
         self._set_trade_date_lst("futwsr", "20060106")
+        # 日度数据下载
         for trade_date in tqdm(self.trade_date_lst):
             # 日频数据
             fields_lst = [
@@ -280,9 +286,6 @@ class FutDailyDownload(DataBase):
 
     @logger_decorator(logger)
     def download_futholding(self):
-        """
-        期货机构持仓下载
-        """
         exchange_lst = ["CFFEX", "CZCE", "DCE", "SHFE"]
         start_date_dct = {
             "CFFEX": "20100416",

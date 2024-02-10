@@ -52,9 +52,6 @@ class TradecalDownload(DataBase):
 
     @logger_decorator(logger)
     def download_main(self):
-        """
-        下载的主函数
-        """
         download_flag = self._check_flag_download()
         if download_flag:
             logger.info("数据库最后一天离今天在30天内，下载交易日历！")

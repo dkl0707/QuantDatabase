@@ -34,6 +34,8 @@ class Config(object):
 
     def get_config(self, option):
         """
+        Description
+        ----------
         获取配置文件信息
 
         Parameters

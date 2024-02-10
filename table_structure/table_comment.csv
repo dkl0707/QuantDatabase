@@ -11,7 +11,13 @@ stk_data,asharecashflow,A股现金流量表
 stk_data,asharedailybasic,A股每日指标
 stk_data,asharedailyprices,A股每日交易价格数据
 stk_data,ashareincome,A股利润表数据
+stk_data,ashareindexbasic,指数基本信息
+stk_data,ashareindexdaily,指数日频数据
+stk_data,ashareindexmonthly,指数月频数据
+stk_data,ashareindexweight,指数成分股权重数据（仅有主要市值指数）
 stk_data,asharemonthlyprices,A股每月交易价格数据
 stk_data,asharestockbasic,A股基本情况表
+stk_data,asharesw2021basic,申万行业指数(2021年版)基本信息
 stk_data,asharesw2021daily,申万行业指数(2021年版)日频数据
+stk_data,asharesw2021member,申万行业指数(2021年版)成分股数据
 stk_data,asharetradecal,A股交易日历

@@ -13,7 +13,7 @@ from utils.downloader import TushareDownloader
 from utils.logger import logger_decorator, Logger
 from utils.utils import divide_lst
 import datetime
-from sqlalchemy.types import VARCHAR, DECIMAL
+from sqlalchemy.types import VARCHAR, DECIMAL, SMALLINT
 import threading
 
 # 获取token
@@ -28,7 +28,7 @@ logger = Logger("asharesw2021daily")
 
 class AshareSW2021DailyDownload(DataBase):
     """
-    申万2021行业指数交易数据下载
+    申万2021行业指数数据下载
     """
 
     def __init__(self, trade_date_lst=None):
@@ -87,21 +87,70 @@ class AshareSW2021DailyDownload(DataBase):
 
     @logger_decorator(logger)
     def download_main(self):
-        """
-        下载的主函数
-        """
+        self.download_indexbasic()
+        self.download_member()
         self.download_dailyprices()
+
+    def _check_indexbasic(self):
+        sql = 'select count(*) from asharesw2021basic;'
+        if self.execute_sql(sql)[0][0]!=31:
+            return False
+        return True
+
+    @logger_decorator(logger)
+    def download_indexbasic(self):
+        if self._check_indexbasic():
+           return
+        index_basic = pro.index_classify(src='SW2021', level='L1')
+        index_basic = index_basic[['index_code', 'industry_name']].copy()
+        index_basic.columns = ["index_code", "name"]
+        sql_dtype = {
+            "index_code": VARCHAR(255),
+            "name": VARCHAR(255),
+        }
+        self.store_data(
+            data=index_basic,
+            data_name="申万行业指数(2021年版)基本情况表数据",
+            table_name="asharesw2021basic",
+            flag_replace=True,
+            dtype=sql_dtype,
+        )
+        return
+
+    @logger_decorator(logger)
+    def download_member(self):
+        # 拉取数据
+        fields = ["index_code", "con_code", "in_date", "out_date", "is_new"]
+        index_code_df = pro.index_classify(src='SW2021', level='L1')
+        index_code_lst = index_code_df["index_code"].tolist()
+        df = pd.DataFrame()
+        for index_code in index_code_lst:
+            tempdf = downloader.download(
+                pro.index_member, index_code=index_code, fields=fields
+            )
+            tempdf['is_new'] = tempdf['is_new'].replace({'Y':1, 'N':0})
+            tempdf = tempdf.sort_values(["con_code", "in_date"])
+            df = pd.concat([df, tempdf])
+        df = df.reset_index(drop=True)
+        sql_dtype = {
+            "index_code": VARCHAR(255),
+            "con_code": VARCHAR(255),
+            "in_date": VARCHAR(255),
+            "out_date": VARCHAR(255),
+            "is_new": SMALLINT,
+        }
+        df = df[list(sql_dtype.keys())].copy()
+        self.store_data(
+            data=df,
+            data_name="申万行业指数(2021年版)成分股数据",
+            table_name="asharesw2021member",
+            flag_replace=True,
+            dtype=sql_dtype,
+        )
+        return
 
     @logger_decorator(logger)
     def download_dailyprices(self, n_threads=10):
-        """
-        下载日频价格数据
-
-        Parameters
-        ----------
-        n_threads : int, optional
-            线程数量, by default 10
-        """
         self._set_trade_date_lst("asharesw2021daily")
         # 获取申万行业指数列表
         ind_code_df = pro.index_classify(src="SW2021", level="L1")
